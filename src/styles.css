@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
+
+:root {
+  font-family: "DM Sans", system-ui, sans-serif;
+  color: #17191f;
+  background: #f7f8fc;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; background: #f7f8fc; }
+button, input { font: inherit; }
+
+.app { min-height: 100vh; background: #f7f8fc; }
+
+.topbar {
+  height: 68px;
+  border-bottom: 1px solid #e8eaf0;
+  background: rgba(255,255,255,.88);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 max(22px, calc((100vw - 1080px) / 2));
+}
+
+.brand { display:flex; align-items:center; gap:10px; font-size:13px; font-weight:700; letter-spacing:-.01em; }
+.brand-mark {
+  width:28px; height:28px; border-radius:8px; display:grid; place-items:center;
+  background:#17191f; color:white; font:700 13px "Manrope";
+}
+.privacy { color:#7d818c; font-size:11px; display:flex; align-items:center; gap:7px; }
+.privacy-dot { width:6px; height:6px; border-radius:50%; background:#4f9d69; }
+
+.container { width:min(1080px, calc(100% - 36px)); margin:auto; }
+
+.intro { padding:68px 0 38px; max-width:700px; }
+.kicker { color:#777d89; font-size:10px; font-weight:700; letter-spacing:.16em; margin-bottom:13px; }
+h1 {
+  margin:0; font:800 clamp(38px,6vw,62px)/1.03 "Manrope", sans-serif;
+  letter-spacing:-.055em;
+}
+h1 em { font-style:normal; color:#777d89; }
+.intro p { max-width:560px; color:#727783; line-height:1.65; font-size:14px; margin:18px 0 0; }
+
+.workspace { display:grid; grid-template-columns:390px 1fr; gap:16px; align-items:stretch; }
+
+.panel {
+  background:white; border:1px solid #e6e8ee; border-radius:18px;
+  box-shadow:0 8px 30px rgba(25,29,40,.045);
+}
+
+.inputs-panel { padding:25px; }
+.panel-heading { display:flex; justify-content:space-between; align-items:start; margin-bottom:23px; }
+.panel-heading h2 { margin:0; font:700 16px "Manrope"; }
+.panel-heading p { margin:6px 0 0; color:#8a8f99; font-size:11px; }
+
+.reset-btn {
+  border:0; background:#f3f4f7; color:#6e7480; padding:7px 10px;
+  border-radius:8px; cursor:pointer; font-size:10px; font-weight:700;
+}
+.reset-btn:hover { background:#e9ebef; color:#252831; }
+
+.input-grid { display:grid; grid-template-columns:1fr 1fr; gap:13px; }
+
+.field { display:flex; flex-direction:column; gap:7px; }
+.field > span { color:#5e6470; font-size:10px; font-weight:700; }
+.input-wrap { position:relative; }
+input {
+  width:100%; border:1px solid #dfe2e8; border-radius:10px; background:#fbfbfc;
+  color:#17191f; padding:12px 11px; outline:none; transition:.15s;
+}
+input:hover { border-color:#cfd3db; }
+input:focus { background:white; border-color:#858b98; box-shadow:0 0 0 3px #17191f0b; }
+.input-wrap b { position:absolute; right:12px; top:50%; transform:translateY(-50%); color:#8b909a; font-size:12px; }
+
+.summary {
+  margin-top:20px; padding:15px; border-radius:12px; background:#f7f8fa;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.summary div:not(.summary-line) { display:flex; flex-direction:column; gap:5px; }
+.summary span { font-size:9px; color:#858a94; text-transform:uppercase; letter-spacing:.07em; font-weight:700; }
+.summary strong { font:700 16px "Manrope"; }
+.summary-accent { color:#3e7650; }
+.summary-line { width:1px; height:28px; background:#e1e3e7; }
+
+.error, .inline-error {
+  display:flex; align-items:center; gap:8px; margin-top:13px; padding:10px 11px;
+  border:1px solid #f0cccc; background:#fff5f5; color:#a83c3c; border-radius:9px; font-size:11px;
+}
+.error-icon, .inline-error span {
+  width:17px; height:17px; flex:0 0 17px; display:grid; place-items:center;
+  border-radius:50%; background:#c84b4b; color:white; font-weight:800; font-size:10px;
+}
+
+.calculator-panel { min-height:390px; overflow:hidden; }
+.tabs { display:grid; grid-template-columns:repeat(3,1fr); border-bottom:1px solid #e8e9ed; }
+.tabs button {
+  border:0; background:white; color:#8b9099; padding:17px 10px 15px;
+  cursor:pointer; font-size:11px; font-weight:700; position:relative;
+}
+.tabs button.active { color:#17191f; }
+.tabs button.active:after {
+  content:""; position:absolute; height:2px; background:#17191f;
+  left:25%; right:25%; bottom:-1px; border-radius:2px;
+}
+.view { padding:29px 31px 31px; }
+.view-label { color:#8b9099; font-size:9px; font-weight:800; letter-spacing:.15em; }
+.big-number { margin-top:9px; font:800 clamp(48px,7vw,66px) "Manrope"; letter-spacing:-.06em; }
+.progress { height:7px; background:#eceef2; border-radius:10px; overflow:hidden; margin-top:18px; }
+.progress div { height:100%; background:#4c7a59; border-radius:10px; transition:width .25s ease; }
+.result-caption { color:#7f848e; font-size:11px; margin-top:9px; }
+.formula {
+  margin-top:30px; padding:12px 13px; border:1px solid #eceef1; border-radius:10px;
+  color:#7d828c; font-size:10px; display:flex; gap:10px; align-items:center; justify-content:center;
+}
+.formula b { color:#b0b4bc; }
+
+.question { margin:8px 0 0; font:700 24px "Manrope"; letter-spacing:-.03em; }
+.view-text { color:#7c818b; font-size:11px; line-height:1.55; max-width:500px; margin:8px 0 22px; }
+
+.segmented {
+  display:grid; grid-template-columns:1fr 1fr; background:#f1f2f5;
+  padding:3px; border-radius:10px; margin-bottom:17px; max-width:300px;
+}
+.segmented button {
+  border:0; background:transparent; padding:9px; border-radius:8px;
+  color:#7c818b; font-size:10px; font-weight:700; cursor:pointer;
+}
+.segmented .selected { background:white; color:#17191f; box-shadow:0 1px 4px #0000000d; }
+
+.compact { max-width:290px; }
+.primary-btn {
+  border:0; background:#17191f; color:white; border-radius:9px;
+  padding:11px 15px; font-size:11px; font-weight:700; cursor:pointer; margin-top:15px;
+}
+.primary-btn:hover { background:#2b2e36; }
+
+.result-grid {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:9px; margin-top:21px;
+}
+.metric { background:#f7f8fa; border:1px solid #eceef1; border-radius:10px; padding:13px; }
+.metric span { display:block; color:#878c96; font-size:9px; font-weight:700; }
+.metric strong { display:block; margin-top:5px; font:700 19px "Manrope"; }
+.metric.danger strong { color:#b24b4b; }
+
+.recovery {
+  margin-top:23px; display:grid; grid-template-columns:1fr 1fr; gap:9px;
+}
+.recovery div {
+  padding:19px; border-radius:12px; background:#f7f8fa; border:1px solid #eceef1;
+}
+.recovery span { display:block; color:#858a94; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; }
+.recovery strong { display:block; margin-top:6px; font:800 34px "Manrope"; letter-spacing:-.04em; }
+.notice {
+  margin-top:22px; padding:16px; background:#f7f8fa; border:1px solid #e7e9ed;
+  border-radius:11px; color:#565c67; font-size:12px; line-height:1.55;
+}
+.empty { min-height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:30px; }
+.empty-mark { width:44px; height:44px; border-radius:50%; background:#f1f2f4; display:grid; place-items:center; font-weight:800; color:#747985; }
+.empty h2 { font:700 19px "Manrope"; margin:14px 0 6px; }
+.empty p { max-width:310px; color:#888d96; font-size:11px; line-height:1.6; margin:0; }
+
+footer {
+  display:flex; justify-content:center; gap:10px; color:#999ea8; font-size:9px;
+  padding:22px 0 34px;
+}
+
+@media (max-width:820px) {
+  .workspace { grid-template-columns:1fr; }
+  .calculator-panel { min-height:0; }
+}
+@media (max-width:560px) {
+  .container { width:min(100% - 24px, 1080px); }
+  .topbar { padding:0 14px; }
+  .privacy { display:none; }
+  .intro { padding:42px 0 27px; }
+  h1 { font-size:40px; }
+  .input-grid, .result-grid { grid-template-columns:1fr; }
+  .view { padding:25px 20px; }
+  .summary { gap:10px; }
+  .formula { flex-wrap:wrap; }
+  footer { flex-wrap:wrap; }
+}
