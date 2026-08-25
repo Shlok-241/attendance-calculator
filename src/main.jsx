@@ -38,14 +38,39 @@ function calculateCurrent(present, absent) {
 
 function calculateSkip(present, absent, skipLectures, skipDays) {
   const current = calculateCurrent(present, absent);
+
   const skipped = skipLectures + skipDays * LECTURES_PER_DAY;
-  const newTotal = current.total + skipped;
-  const newPercentage = round((present / newTotal) * 100);
+
+  // State immediately after skipping
+  const newPresent = present;
+  const newAbsent = absent + skipped;
+  const newTotal = newPresent + newAbsent;
+
+  const newPercentage = round((newPresent / newTotal) * 100);
+
+  const drop = round(current.percentage - newPercentage);
+
+  // Find the minimum number of future lectures needed
+  // to return to the original attendance percentage.
+  let recoveryLectures = 0;
+
+  if (newPercentage < current.percentage) {
+    const required =
+      (current.percentage * newTotal - 100 * newPresent) /
+      (100 - current.percentage);
+
+    recoveryLectures = Math.ceil(required);
+  }
+
+  const recoveryDays = Math.ceil(recoveryLectures / LECTURES_PER_DAY);
+
   return {
     currentPercentage: current.percentage,
     skipped,
     newPercentage,
-    drop: round(current.percentage - newPercentage),
+    drop,
+    recoveryLectures,
+    recoveryDays,
   };
 }
 
@@ -376,10 +401,16 @@ function SkipView({ mode, setMode, value, setValue, result, error, onCalculate }
       </p>
 
       <div className="segmented">
-        <button className={mode === "lectures" ? "selected" : ""} onClick={() => setMode("lectures")}>
+        <button
+          className={mode === "lectures" ? "selected" : ""}
+          onClick={() => setMode("lectures")}
+        >
           Lectures
         </button>
-        <button className={mode === "days" ? "selected" : ""} onClick={() => setMode("days")}>
+        <button
+          className={mode === "days" ? "selected" : ""}
+          onClick={() => setMode("days")}
+        >
           Days
         </button>
       </div>
@@ -391,20 +422,56 @@ function SkipView({ mode, setMode, value, setValue, result, error, onCalculate }
         compact
       />
 
-      <button className="primary-btn" onClick={onCalculate}>Calculate impact</button>
+      <button className="primary-btn" onClick={onCalculate}>
+        Calculate impact
+      </button>
 
       {error && <InlineError text={error} />}
 
       {result && !error && (
-        <div className="result-grid">
-          <Metric label="Current" value={pct(result.currentPercentage)} />
-          <Metric label="After skipping" value={pct(result.newPercentage)} danger />
-          <Metric label="Drop" value={`${result.drop.toFixed(2)} pts`} danger />
-          <Metric
-            label="Lectures missed"
-            value={result.skipped}
-          />
-        </div>
+        <>
+          <div className="result-grid">
+            <Metric label="Current" value={pct(result.currentPercentage)} />
+
+            <Metric
+              label="After skipping"
+              value={pct(result.newPercentage)}
+              danger
+            />
+
+            <Metric
+              label="Drop"
+              value={`${result.drop.toFixed(2)} pts`}
+              danger
+            />
+
+            <Metric label="Lectures missed" value={result.skipped} />
+          </div>
+
+          <div className="recovery-box">
+            <div className="recovery-heading">
+              <span>RECOVERY</span>
+              <strong>Get back to {pct(result.currentPercentage)}</strong>
+            </div>
+
+            <div className="recovery-values">
+              <div>
+                <span>Lectures to attend</span>
+                <strong>{result.recoveryLectures}</strong>
+              </div>
+
+              <div>
+                <span>Full days</span>
+                <strong>{result.recoveryDays}</strong>
+              </div>
+            </div>
+
+            <p>
+              Attend these lectures consecutively to return to your original
+              attendance percentage.
+            </p>
+          </div>
+        </>
       )}
     </div>
   );
